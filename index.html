@@ -70,7 +70,12 @@
   </form>
 
   <script>
-    var socket = io();
+    var socket;
+    if (process.env.NODE_ENV !== 'production') {
+      socket = io('http://localhost:5000');
+    } else {
+      socket = io();
+    }
 
     var messages = document.getElementById('messages');
     var form = document.getElementById('form');
