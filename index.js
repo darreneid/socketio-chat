@@ -1,6 +1,6 @@
 const express = require('express');
 const app = express();
-app.set('port', 5000);
+// app.set('port', 3000);
 const http = require('http');
 const server = http.createServer(app);
 const { Server } = require('socket.io');
@@ -9,6 +9,10 @@ const io = new Server(server);
 app.get('/', (req, res) => {
   res.sendFile(__dirname + '/index.html');
 });
+
+app.post('/messages', (req, res) => {
+  io.emit('chat message')
+})
 
 io.on('connection', socket => {
   console.log('a user connected');
@@ -22,6 +26,6 @@ io.on('connection', socket => {
   })
 })
 
-server.listen(3000, () => {
-  console.log('listening on *:3000');
+server.listen(5001, () => {
+  console.log('listening on *:5001');
 });
